@@ -13,9 +13,20 @@ services:
     networks:
       kafkanet:
         ipv4_address: 172.25.0.11
+  
+  streaming-api:
+    image: streaming-api:latest
+    container_name: streaming-api
+    ports:
+      - '8000:8000'
+    networks:
+      kafkanet:
+        ipv4_address: 172.25.0.13
+
 
   kafka:
     image: 'bitnami/kafka:latest'
+    container_name: kafka
     ports:
       - '9093:9093'          #change to 9093 to access external from your windows host
     environment:
