@@ -19,7 +19,7 @@ KAFKA_BOOTSTRAP_SERVERS = 'kafka:9092'
 KAFKA_TOPIC = 'streaming_data'
 API_URL = 'http://streaming-api:8000/stream'
 MAX_RETRIES = 5
-RETRY_DELAY = 5
+RETRY_DELAY = 10
 
 class StreamProducer:
     def __init__(self, bootstrap_servers: str, topic: str):
