@@ -12,9 +12,9 @@ import json
 
 # Configuration
 KAFKA_BROKER = "kafka:9092"
-KAFKA_TOPIC = "streaming_data"  # Topic Kafka utilisé
-MODEL_PATH = "./sgd.joblib"  # Chemin pour sauvegarder le modèle
-METRICS_PATH = "./metric1.json"  # Chemin pour sauvegarder les métriques RMSE
+KAFKA_TOPIC = "streaming_data"
+MODEL_PATH = "./sgd.joblib"
+METRICS_PATH = "./metric1.json"
 
 # Initialiser la session Spark
 spark = SparkSession.builder \
