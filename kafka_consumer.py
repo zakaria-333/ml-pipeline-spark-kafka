@@ -10,18 +10,18 @@ from sklearn.metrics import root_mean_squared_error
 import joblib
 import json
 
-# Configuration
+
 KAFKA_BROKER = "kafka:9092"
 KAFKA_TOPIC = "streaming_data"
 MODEL_PATH = "./sgd.joblib"
 METRICS_PATH = "./metric1.json"
 
-# Initialiser la session Spark
+
 spark = SparkSession.builder \
     .appName("VehicleFuelConsumptionRegression") \
     .getOrCreate()
 
-# Définir le schéma des données Kafka
+
 schema = StructType([
     StructField("Engine_Size", DoubleType(), True),
     StructField("Cylinders", DoubleType(), True),
@@ -36,7 +36,7 @@ schema = StructType([
     StructField("Fuel_Type_Z", BooleanType(), True)
 ])
 
-# Charger ou initialiser le modèle
+
 if os.path.exists(MODEL_PATH):
     print("Loading existing model...")
     model = joblib.load(MODEL_PATH)
@@ -44,14 +44,13 @@ else:
     print("No existing model found. Initializing new model...")
     model = SGDRegressor(max_iter=1000, tol=1e-3)
 
-# Charger les métriques
+
 if os.path.exists(METRICS_PATH):
     with open(METRICS_PATH, "r") as f:
         metrics = json.load(f)
 else:
     metrics = {"batch": [], "rmse": []}
 
-# Lire les données du flux Kafka
 df = spark.readStream \
     .format("kafka") \
     .option("kafka.bootstrap.servers", KAFKA_BROKER) \
@@ -92,31 +91,31 @@ def incremental_train(batch_df, batch_id):
         print("Batch is empty, skipping this batch.")
         return
 
-    # Convertir les données en arrays pour scikit-learn
+  
     features = np.array(batch_df.select("features").rdd.map(lambda row: row[0].toArray()).collect())
     labels = np.array(batch_df.select("label").rdd.map(lambda row: row[0]).collect())
 
-    # Si modèle inexistant, initialiser
+   
     if model is None:
         model = SGDRegressor(max_iter=1000, tol=1e-3)
         model.fit(features, labels)
     else:
         model.partial_fit(features, labels)
 
-    # Calculer le RMSE pour le batch courant
+  
    
     predictions = model.predict(features)
     rmse = root_mean_squared_error(labels, predictions)
 
-    # Mettre à jour les métriques
+   
     metrics["batch"].append(batch_id)
     metrics["rmse"].append(rmse)
 
-    # Sauvegarder les métriques
+ 
     with open(METRICS_PATH, "w") as f:
         json.dump(metrics, f)
 
-    # Sauvegarder le modèle
+    
     joblib.dump(model, MODEL_PATH)
     print(f"Batch {batch_id}: RMSE = {rmse:.4f}")
 
