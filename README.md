@@ -36,13 +36,13 @@ Le projet suit l'architecture Kappa, composée des éléments suivants :
 ## 3. Guide d'Installation
 
 ### 3.1 Pré-requis
-- Docker Desktop installé sur votre système
+Docker Desktop installé sur votre système
 ```
 docker --version
 ```
 
 ### 3.2 Clonage du Projet
-   Clonez le dépôt Git avec la commande suivante :
+Clonez le dépôt Git avec la commande suivante :
 ```
 git clone https://github.com/zakaria-333/ml-pipeline-spark-kafka.git
 cd ml-pipeline-spark-kafka
