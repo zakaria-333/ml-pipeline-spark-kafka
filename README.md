@@ -26,7 +26,10 @@ Ce projet implémente un pipeline de machine learning en temps réel basé sur l
 ![kappa_online_ml](https://github.com/user-attachments/assets/4523dd2b-a882-4e1e-9da2-82d23dfa70d4)
 
 Le projet suit l'architecture Kappa, composée des éléments suivants :
-- **FastAPI** : Fournit une API pour diffuser les données du fichier CSV.
+- **FastAPI** : Fournit une API pour diffuser les données du fichie
+
+
+r CSV.
 - **Kafka** : Sert de middleware pour transmettre les données en temps réel.
 - **Spark** : Consomme les flux de Kafka et applique des modèles de machine learning.
 - **Streamlit** : Visualise les prédictions et les métriques du modèle en temps réel.
@@ -102,3 +105,5 @@ python -m streamlit run streamlit-prediction.py
 ## Remarques
 - Consommateur avant Producteur : Lancez le consommateur Spark avant le producteur Kafka pour garantir un traitement fluide des données.
 - Utilisation de plusieurs terminaux : Chaque commande Spark doit être exécutée dans un terminal Spark-Master distinct.
+## Demo
+https://github.com/user-attachments/assets/66d8cee7-d49a-4dd6-946d-9f937cbc2fb4
